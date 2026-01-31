@@ -18,7 +18,8 @@ def aggregate_weekly(df: pd.DataFrame) -> pd.DataFrame:
         total_miles=("distance", "sum"),
         num_runs=("distance", "count"),
         total_time=("moving_time", "sum"),
-        vdot_max=("vdot", "max")
+        vdot_max=("vdot", "max"),
+        total_elevation=("total_elevation_gain", "sum")
     ).reset_index()    
 
     weekly["avg_pace"] = weekly["total_time"] / weekly["total_miles"]                      

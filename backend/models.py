@@ -1,0 +1,54 @@
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Optional, Literal
+
+class RunActivity(BaseModel):
+    id: int
+    name: str
+    type: str = "Run"
+    distance_miles: float = Field(ge=0)
+    moving_time: float = Field(ge=0)
+    mile_pace: float = Field(ge=0)
+    start_date_local: datetime
+    total_elevation_gain: float = 0
+    average_heartrate: Optional[float] = None
+    pace_percentile: float = Field(ge=0, le=1)
+    distance_percentile: float = Field(ge=0, le=1)
+    workout_type: Literal["None", "Race", "Long Run", "Workout", "Warmup/Cooldown"]
+    is_warmup_cooldown: bool
+    vdot: float = Field(ge=0)
+
+class WeeklySummary(BaseModel):
+    week_start: datetime
+    total_miles: float = Field(ge=0)
+    num_runs: int = Field(ge=0)
+    total_time: float = Field(ge=0)
+    avg_pace: float = Field(ge=0)
+    total_elevation: float
+    vdot_max: float = Field(ge=0) 
+
+class RunnerProfile(BaseModel):
+    recent_weeks: list[WeeklySummary]
+    avg_weekly_mileage: float = Field(ge=0)
+    constant_of_variance: float = Field(ge=0, le=1)
+    predicted_5k_minutes: tuple[float, float]
+    predicted_half_marathon_minutes: tuple[float, float]
+    predicted_marathon_minutes: tuple[float, float]
+
+class WeatherConditions(BaseModel):
+    temperature_f: float
+    temperature_c: float
+    humidity_percent: float = Field(ge=0, le=100)
+    wind_speed_mph: float = Field(ge=0)
+    conditions: str 
+    feels_like_f: float
+    feels_like_c: float
+
+class RaceInfo(BaseModel):
+    name: str
+    distance_miles: float = Field(ge=0)
+    date: datetime
+    location: str
+    lat: Optional[float] = None
+    lon: Optional[float] = None
+    weather: Optional[WeatherConditions] = None
