@@ -21,10 +21,10 @@ def get_tokens():
     auth_code = input("Paste the code here: ")
 
     payload = {
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'code': auth_code,
-        'grant_type': 'authorization_code'
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+        "code": auth_code,
+        "grant_type": "authorization_code"
     }
 
     response = requests.post(TOKEN_URL, payload)
@@ -34,8 +34,8 @@ def get_tokens():
 
         with open("strava_tokens.json", "w") as f:
             json.dump(tokens, f)
-        print("\nSUCCESS! Tokens saved to 'strava_tokens.json'.")
-        print(f"Access Token: {tokens['access_token']}")
+        print("\nSUCCESS! Tokens saved to \"strava_tokens.json\".")
+        print(f"Access Token: {tokens["access_token"]}")
     else:
         print("\nERROR:", response.json())
 

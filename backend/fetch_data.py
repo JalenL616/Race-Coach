@@ -10,21 +10,22 @@ CLIENT_ID = os.getenv("STRAVA_CLIENT_ID")
 CLIENT_SECRET = os.getenv("STRAVA_CLIENT_SECRET")
 TOKEN_FILE = "strava_tokens.json"
 DATA_FILE = "data/raw_activities.json"
+NUM_ACTIVITIES = 200
 
 def get_valid_access_tokens():
 
     with open(TOKEN_FILE, mode="r") as f:
         tokens = json.load(f)
 
-    if tokens['expires_at'] < time.time():
+    if tokens["expires_at"] < time.time():
         print("Refreshing expired token...")
         response = requests.post(
             "https://www.strava.com/oauth/token", 
             data={
-                'client_id': CLIENT_ID,
-                'client_secret': CLIENT_SECRET,
-                'grant_type': 'refresh_token',
-                'refresh_token': tokens['refresh_token']
+                "client_id": CLIENT_ID,
+                "client_secret": CLIENT_SECRET,
+                "grant_type": "refresh_token",
+                "refresh_token": tokens["refresh_token"]
             }
         )
 
@@ -33,9 +34,9 @@ def get_valid_access_tokens():
         with open("strava_tokens.json", "w") as f:
             json.dump(new_tokens, f)
 
-        return new_tokens['access_token']
+        return new_tokens["access_token"]
     
-    return tokens['access_token']
+    return tokens["access_token"]
 
 def fetch_activities():
     access_token = get_valid_access_tokens()
@@ -44,8 +45,8 @@ def fetch_activities():
 
     print("Fetching activities...")
 
-    url = "https://www.strava.com/api/v3/athlete/activities?per_page=100"
-    headers = {'Authorization': f"Bearer {access_token}"}
+    url = f"https://www.strava.com/api/v3/athlete/activities?per_page={NUM_ACTIVITIES}"
+    headers = {"Authorization": f"Bearer {access_token}"}
 
     response = requests.get(url, headers=headers)
 
