@@ -38,11 +38,19 @@ class RunnerProfile(BaseModel):
 class WeatherConditions(BaseModel):
     temperature_f: float
     temperature_c: float
-    humidity_percent: float = Field(ge=0, le=100)
     wind_speed_mph: float = Field(ge=0)
+    wind_gust_mph: Optional[float] = Field(default=None, ge=0)                
+    precipitation_mm: float = Field(default=0, ge=0) 
     conditions: str 
     feels_like_f: float
     feels_like_c: float
+
+class WeatherImpact(BaseModel):
+    weather: WeatherConditions
+    wind_impact: Optional[float] = 0
+    temperature_impact: Optional[float] = 0
+    total_impact: Optional[float] = 0
+    risk_factors: Optional[list[str]] = []
 
 class RaceInfo(BaseModel):
     name: str
