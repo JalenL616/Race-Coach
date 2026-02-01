@@ -1,6 +1,6 @@
 import pandas as pd
-from categorize_activities import categorize_activities
-from clean_data import clean_data
+from .categorize_activities import categorize_activities
+from .clean_data import clean_data
 from pathlib import Path                                                               
                                                                                          
 DATA_URL = Path(__file__).parent.parent / "data" / "raw_activities.json"   

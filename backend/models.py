@@ -25,15 +25,18 @@ class WeeklySummary(BaseModel):
     total_time: float = Field(ge=0)
     avg_pace: float = Field(ge=0)
     total_elevation: float
-    vdot_max: float = Field(ge=0) 
+    vdot_max: Optional[float] = None
+
+class RacePrediction(BaseModel):
+    race: Literal["5K", "10K", "half_marathon", "marathon"]
+    ideal_time: float
+    consistency_penalty: float
 
 class RunnerProfile(BaseModel):
     recent_weeks: list[WeeklySummary]
     avg_weekly_mileage: float = Field(ge=0)
-    constant_of_variance: float = Field(ge=0, le=1)
-    predicted_5k_minutes: tuple[float, float]
-    predicted_half_marathon_minutes: tuple[float, float]
-    predicted_marathon_minutes: tuple[float, float]
+    coefficient_of_variance: float = Field(ge=0, le=1)
+    predicted_race_times: Optional[list[RacePrediction]] = []
 
 class WeatherConditions(BaseModel):
     temperature_f: float

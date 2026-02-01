@@ -12,14 +12,7 @@ DISTANCE_MULTIPLIERS = {
     "marathon": 2.5,       # Critical risk
 }       
 
-def calculate_coefficient_of_variance(miles):
-    return np.std(miles) / np.mean(miles)
-
-def calculate_consistency_penalty(weekly_df: pd.DataFrame, race_type: str) -> dict:
-    miles = weekly_df["total_miles"].values
-
-    cv = calculate_coefficient_of_variance(miles)
-
+def calculate_consistency_penalty(cv: int, race_type: str) -> int:
     if cv <= SAFE_ZONE_CV:                                                              
          return 1.0
     

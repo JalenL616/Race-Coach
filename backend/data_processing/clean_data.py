@@ -1,7 +1,7 @@
 import pandas as pd
-from calculate_vdot import calculate_vdot
+from .calculate_vdot import calculate_vdot
 
-DESIRED_COLUMNS = ["name", "type", "distance", "moving_time", "average_heartrate", "total_elevation_gain", "workout_type", "start_date_local"]
+DESIRED_COLUMNS = ["name", "type", "distance", "elapsed_time", "moving_time", "average_heartrate", "total_elevation_gain", "workout_type", "start_date_local"]
 METERS_PER_MILE = 1609.34
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame: 
@@ -13,6 +13,7 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
 
     # Convert to minutes and miles
     df.moving_time /= 60
+    df.elapsed_time /= 60
     df.distance /= METERS_PER_MILE
 
     # Add a column for pace in minutes / mile
