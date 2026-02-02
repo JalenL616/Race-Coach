@@ -26,16 +26,3 @@ def aggregate_weekly(df: pd.DataFrame) -> pd.DataFrame:
     weekly["mileage_change"] = weekly["total_miles"].pct_change()   
 
     return weekly
-
-def print_data():
-    df = pd.read_json(DATA_URL)
-    df = clean_data(df)
-    df = categorize_activities(df)
-    print(df.to_string())
-    with open("output.csv", "w") as f: 
-        df.to_csv(f, index=False)
-    weekly_df = aggregate_weekly(df)
-    print(weekly_df.to_string())
-
-if __name__ == "__main__":
-    print_data()

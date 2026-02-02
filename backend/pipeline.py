@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from data_processing.processor import load_data, aggregate_weekly
 from data_processing.clean_data import clean_data
 from data_processing.categorize_activities import categorize_activities
-from calculate_race_performances import calculate_race_performances
+from data_processing.calculate_race_performances import calculate_race_performances
 from models import RunnerProfile, WeeklySummary 
 
 NUMBER_OF_RECENT_WEEKS = 12

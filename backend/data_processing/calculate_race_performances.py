@@ -1,7 +1,7 @@
 import pandas as pd
 from models import WeeklySummary, RacePrediction
-from data_processing.calculate_consistency import calculate_consistency_penalty
-from data_processing.calculate_vdot import calculate_vo2_cost, calculate_percent_vo2_max
+from .calculate_consistency import calculate_consistency_penalty
+from .calculate_vdot import calculate_vo2_cost, calculate_percent_vo2_max
 
 RACE_DISTANCES = {"5K": 5000, "10K": 10000, "half_marathon": 21097.5, "marathon": 42195}
 
@@ -33,8 +33,8 @@ def calculate_race_performances(recent_weeks: list[WeeklySummary], cv: float) ->
 
     vdot_max = 0
     for week in weekly_training:
-        vdot_max = max(vdot_max, week.vdot_max)
-    print (vdot_max)
+        if week.vdot_max is not None:                                                 
+            vdot_max = max(vdot_max, week.vdot_max) 
     
     for race in RACE_DISTANCES.keys():
         ideal_race_time = calculate_ideal_race_time(vdot_max, race)

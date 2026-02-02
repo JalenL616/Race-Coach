@@ -35,7 +35,7 @@ class RacePrediction(BaseModel):
 class RunnerProfile(BaseModel):
     recent_weeks: list[WeeklySummary]
     avg_weekly_mileage: float = Field(ge=0)
-    coefficient_of_variance: float = Field(ge=0, le=1)
+    coefficient_of_variance: float = Field(ge=0)
     predicted_race_times: Optional[list[RacePrediction]] = []
 
 class WeatherConditions(BaseModel):
