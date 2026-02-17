@@ -6,7 +6,7 @@ CALCULATE_SPLITS_SCHEMA = {
         "name": "calculate_splits",
         "description":  """Calculate mile-by-mile split times for a race based on goal time and pacing strategy.
                             Instructions:
-                            1.  Call this after get_weather_adjusted_pace to generate specific mile-by-mile pacing targets.
+                            1. Call this after get_weather_adjusted_pace to generate specific mile-by-mile pacing targets.
                             2. Group the splits array into phases based on your knowledge base (e.g., miles 1-6, 7-20, 21-26 for marathon)
                             3. Add effort levels to each phase from INTENSITY_GUIDELINES.md (e.g., 5/10, 7/10, 9/10)
                             4. Add mental cues from MENTAL_PREP_GUIDE.md for each phase
@@ -120,56 +120,7 @@ CALCULATE_NUTRITION_SCHEMA = {
     }
 }
 
-GET_WEATHER_ADJUSTED_PACE_SCHEMA = {
-    "type": "function",
-      "function": {
-          "name": "get_weather_adjusted_pace",
-          "description": """Calculate adjusted race timebased on weather conditions.
-                            Instructions:
-                            1. Call the function for adjusted pace and goal time
-                            2. Pass the adjusted goal time to calculate_splits tool call
-                            3. Explain to runner temperature and wind impact percent and adjusmtent to goal time
-                            4. Use recommendation text in your pacing explanation
-                            5. Mention risk_factors if any exist
-
-                            Returns:
-                            - adjusted_pace: The recommended pace in minutes per mile accounting for weather
-                            - adjustment_seconds: How many seconds slower/faster than base pace
-                            - adjusted_goal_time: The recommended goal time in minutes per mile accounting for weather
-                            - time_added_minutes: How many minutes were added to base race time
-                            - temperature_impact_percent: Percent pace adjustment due to temperature
-                            - wind_impact_percent: Percent pace adjustment due to wind
-                            - total_impact_percent: Total percent pace adjustment due to weather
-                            - recommendation: Text explanation of the adjustment
-                            """,
-          "parameters": {
-              "type": "object",
-              "properties": {
-                  "base_pace_minutes": {
-                      "type": "number",
-                      "description": "Target pace in minutes per mile"
-                  },
-                  "temperature_f": {
-                      "type": "number",
-                      "description": "Temperature in Fahrenheit"
-                  },
-                  "wind_speed_mph": {
-                      "type": "number",
-                      "description": "Wind speed in mph. Default 0."
-                  },
-                  "distance_miles": {
-                      "type": "number",
-                      "description": "Race distance - affects weather impact."
-                  }
-              },
-              "required": ["base_pace_minutes", "temperature_f", "distance_miles"]
-          }
-      }
-  }
-
-
 AGENT_TOOLS = [
     CALCULATE_SPLITS_SCHEMA,
-    CALCULATE_NUTRITION_SCHEMA,
-    GET_WEATHER_ADJUSTED_PACE_SCHEMA
+    CALCULATE_NUTRITION_SCHEMA
 ]
